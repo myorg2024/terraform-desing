@@ -20,36 +20,6 @@ variable "shared_vpc_host" {
   default     = false
 }
 
-variable "subnets" {
-  type        = list(map(string))
-  description = "The list of subnets being created"
-}
-
-variable "secondary_ranges" {
-  type        = map(list(object({ range_name = string, ip_cidr_range = string })))
-  description = "Secondary ranges that will be used in some of the subnets"
-  default     = {}
-}
-
-variable "routes" {
-  type        = list(map(string))
-  description = "List of routes being created in this VPC"
-  default     = []
-}
-
-variable "firewall_rules" {
-  type        = any
-  description = "List of firewall rules"
-  default     = []
-}
-
-variable "delete_default_internet_gateway_routes" {
-  type        = bool
-  description = "If set, ensure that all routes within the network specified whose names begin with 'default-route' and with a next hop of 'default-internet-gateway' are deleted"
-  default     = false
-}
-
-
 variable "description" {
   type        = string
   description = "An optional description of this resource. The resource must be recreated to modify this field."
@@ -62,9 +32,14 @@ variable "auto_create_subnetworks" {
   default     = false
 }
 
+variable "delete_default_internet_gateway_routes" {
+  type        = bool
+  description = "If set, ensure that all routes within the network specified whose names begin with 'default-route' and with a next hop of 'default-internet-gateway' are deleted"
+  default     = false
+}
+
 variable "mtu" {
   type        = number
   description = "The network MTU (If set to 0, meaning MTU is unset - defaults to '1460'). Recommended values: 1460 (default for historic reasons), 1500 (Internet default), or 8896 (for Jumbo packets). Allowed are all values in the range 1300 to 8896, inclusively."
-  default   
-    = 0
+  default     = 0
 }
