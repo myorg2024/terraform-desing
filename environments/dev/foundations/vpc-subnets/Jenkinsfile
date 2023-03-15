@@ -9,7 +9,7 @@ pipeline{
     stages{
         stage('Git Checkout'){
             steps{
-                git branch: 'master', credentialsId: 'jenkins-example-github-pat', url: 'git@github.com:msap2024/terraform-gcp-infra.git'
+                git branch: 'master', credentialsId: 'jenkins-example-github-pat', url: 'git@github.com:myorg2024/terraform-desing.git'
             }
         }
         stage('Terraform Init'){
