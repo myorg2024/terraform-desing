@@ -1,0 +1,61 @@
+pipeline{
+    agent any
+    environment {
+       PATH = "${PATH}:${getTerraformPath()}"
+    }
+    tools {
+       terraform 'terraform v1.3.2' 
+    }
+    stages{
+        stage('Git Checkout'){
+            steps{
+                git branch: 'master', credentialsId: 'jenkins-example-github-pat', url: 'git@github.com:msap2024/terraform-gcp-infra.git'
+            }
+        }
+        stage('Terraform Init'){
+            steps{
+                dir("${env.WORKSPACE}/dev/compute_instance/simple/"){
+                    sh returnStatus: true, script: 'terraform workspace new dev'
+                    sh "terraform init -reconfigure"
+                }
+            }
+        }
+        stage('Terraform Plan'){
+            steps{
+                dir("${env.WORKSPACE}/dev/compute_instance/simple/"){
+                sh 'terraform plan'
+                }
+            }
+        }
+        stage('Terraform apply'){
+            steps{
+                dir("${env.WORKSPACE}/dev/compute_instance/simple/"){
+                    timeout(time:5, unit:'DAYS'){
+                    input message:'Approve PRODUCTION Deployment?'
+                    sh 'terraform apply --auto-approve'
+                    }
+                }
+            }
+        }
+    
+        
+        stage('Terraform Destroy'){
+            steps{
+                dir("${env.WORKSPACE}/dev/compute_instance/simple/"){
+                    timeout(time:5, unit:'DAYS'){
+                    input message:'Approve PRODUCTION Deployment Destroy?'
+                    sh 'terraform destroy --auto-approve'
+                    }
+                }
+            }
+        }
+    }
+}
+        
+            
+
+   
+def getTerraformPath(){ 
+    def tfHome = tool name: 'terraform v1.3.2', type: 'terraform'
+    return tfHome
+}
