@@ -1,0 +1,20 @@
+pipeline {
+    agent any
+    tools {
+        terraform "terraform v1.3.2 "
+    }
+
+    stages {
+        stage ('Git Checkout') {
+            steps {
+                git credentialsId: 'jenkins-example-github-pat', url: 'git@github.com:myorg2024/terraform-desing.git'
+            }
+
+        }
+        stage ('Terraform init') {
+            steps {
+                sh label: ",'terraform init"
+            }
+        }
+    }
+}
