@@ -4,7 +4,7 @@ pipeline{
        PATH = "${PATH}:${getTerraformPath()}"
     }
     tools {
-       terraform "terraform v1.3.2"
+       terraform "Terraformv1.3.2"
     }
     stages{
         stage('Git Checkout'){
