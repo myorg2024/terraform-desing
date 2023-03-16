@@ -5,12 +5,13 @@ pipeline{
     }
     tools {
         terraform "Terraform 1.4.0"
+        git "Default"
     }
-    stages{
-        stage('Git Checkout'){
-            steps{
+        stages{
+            stage('Git Checkout'){
+                steps{
                 git branch: 'master', credentialsId: 'jenkins-example-github-pat', url: 'git@github.com:myorg2024/terraform-desing.git'
-            }
+             }
         }
         stage('Terraform Init'){
             steps{
