@@ -4,7 +4,7 @@ pipeline{
        PATH = "${PATH}:${getTerraformPath()}"
     }
     tools {
-        terraform "Terraform 1.4.0"
+        terraform "Terraform"
         git "Default"
     }
         stages{
@@ -54,6 +54,6 @@ pipeline{
         
    
 def getTerraformPath(){ 
-    def tfHome = tool name: 'Terraform 1.4.0', type: 'terraform'
+    def tfHome = tool name: 'Terraform', type: 'terraform'
     return tfHome
 }
