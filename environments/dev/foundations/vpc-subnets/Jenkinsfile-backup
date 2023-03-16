@@ -55,6 +55,6 @@ pipeline{
 
    
 def getTerraformPath(){ 
-    def tfHome = tool name: 'terraform1.4.0', type: 'terraform'
+    def tfHome = tool name: 'Terraform1.4.0', type: 'terraform'
     return tfHome
 }
