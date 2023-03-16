@@ -1,15 +1,24 @@
 pipeline {
     agent any
+    tools {
+        terraform 'Terraform-1.4.2'
+    }
     stages {
-        stage('checkout') {
+        stage ('Git Checkout') {
             steps {
-                chackout scm
+                git credentialsId: '530874d0-57e8-445c-8862-2aab7a5573fd', url: 'https://github.com/myorg2024/terraform-desing.git'
             }
         }
-        stage('terraform') {
+        stage('Terraform Init') {
             steps {
-                sh'./terraform init'
+                sh 'terraform init'
             }
+            
+        stage('Terraform Plan') {
+            steps {
+                sh 'terraform plan'
+            }
+        }
         }
     }
 }
